@@ -47,10 +47,5 @@ namespace LetterEater.Core.Models
         public string ISBN { get; }
 
         public int Quantity { get; }
-
-        //public static (Book book, string error) Create(Guid bookId, string author, string title, string genre, string description, decimal price, int countPages, string publishingHouse, string series, string isbn, int quantity)
-        //{
-
-        //}
     }
 }
