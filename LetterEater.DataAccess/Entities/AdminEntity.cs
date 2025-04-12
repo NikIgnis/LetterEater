@@ -17,7 +17,7 @@ namespace LetterEater.DataAccess.Entities
             Email = email;
             Password = password;
         }
-
+        //Guid
         public Guid AdminId { get; set; }
 
         public string Name { get; set; }
