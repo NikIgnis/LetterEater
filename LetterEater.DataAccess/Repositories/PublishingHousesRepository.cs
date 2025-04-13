@@ -1,5 +1,4 @@
-﻿using BookStore.Core.Models;
-using LetterEater.Core.Models;
+﻿using LetterEater.Core.Models;
 using LetterEater.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Repositories
 {
-    public class PublishingHousesRepository
+    public class PublishingHousesRepository : IPublishingHousesRepository
     {
         private readonly LetterEaterDbContext _context;
 
@@ -23,7 +22,7 @@ namespace LetterEater.DataAccess.Repositories
         public async Task<Guid> Create(PublishingHouse publishingHouse)
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouse.PublishingHouseId);
-            
+
             if (!publishingHouseExist)
             {
                 throw new Exception("Publishing house doesn't exist");
@@ -91,11 +90,12 @@ namespace LetterEater.DataAccess.Repositories
             return publishingHouse;
         }
 
-        public async Task<Guid> Update(Guid publishingHouseId, string name, List<BookEntity> books)
+        public async Task<Guid> Update(Guid publishingHouseId, string name, List<Book> books)
         {
-            bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouseId);
+            bool publishingHouseExists = await _context.PublishingHouses
+                .AnyAsync(b => b.PublishingHouseId == publishingHouseId);
 
-            if (!publishingHouseExist)
+            if (!publishingHouseExists)
             {
                 throw new Exception("Publishing house doesn't exist");
             }
@@ -103,16 +103,37 @@ namespace LetterEater.DataAccess.Repositories
             await _context.PublishingHouses
                 .Where(a => a.PublishingHouseId == publishingHouseId)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(b => b.Name, b => name));
+                    .SetProperty(b => b.Name, name));
 
-            var author = await _context.PublishingHouses
-                .Include(a => a.Books)
-                .FirstOrDefaultAsync(a => a.PublishingHouseId == publishingHouseId);
+            var publishingHouse = await _context.PublishingHouses
+                .Include(ph => ph.Books)
+                .FirstOrDefaultAsync(ph => ph.PublishingHouseId == publishingHouseId);
+
+            if (publishingHouse == null)
+            {
+                throw new Exception("Publishing house not found.");
+            }
+
+            publishingHouse.Books.Clear();
 
             foreach (var book in books)
             {
-                _context.Books.Attach(book);
-                author.Books.Add(book);
+                var bookEntity = new BookEntity
+                {
+                    BookId = book.BookId,
+                    Title = book.Title,
+                    Genre = book.Genre,
+                    Description = book.Description,
+                    Price = book.Price,
+                    CountPages = book.CountPages,
+                    Series = book.Series,
+                    ISBN = book.ISBN,
+                    Quantity = book.Quantity,
+                    AuthorId = book.AuthorId,
+                    PublishingHouseId = publishingHouseId
+                };
+
+                publishingHouse.Books.Add(bookEntity);
             }
 
             await _context.SaveChangesAsync();

@@ -1,4 +1,4 @@
-﻿using BookStore.Core.Models;
+﻿using LetterEater.Core.Models;
 using LetterEater.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

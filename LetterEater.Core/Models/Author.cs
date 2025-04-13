@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Core.Models
+namespace LetterEater.Core.Models
 {
     public class Author
     {

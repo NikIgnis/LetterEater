@@ -1,4 +1,4 @@
-﻿using BookStore.Core.Models;
+﻿using LetterEater.Core.Models;
 using LetterEater.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Repositories
 {
-    public class AdminRepository
+    public class AdminRepository : IAdminRepository
     {
         private readonly LetterEaterDbContext _context;
 

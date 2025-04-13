@@ -1,5 +1,4 @@
-﻿using BookStore.Core.Models;
-using LetterEater.Core.Models;
+﻿using LetterEater.Core.Models;
 using LetterEater.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Repositories
 {
-    public class AuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         private readonly LetterEaterDbContext _context;
 
@@ -92,10 +91,12 @@ namespace LetterEater.DataAccess.Repositories
             return authors;
         }
 
-        public async Task<Guid> Update(Guid authorId, string name, string surename, List<BookEntity> books)
+        public async Task<Guid> Update(Guid authorId, string name, string surename, List<Book> books)
         {
-            bool authorExist = await _context.Authors.AnyAsync(a => a.AuthorId == authorId);
-            if (!authorExist)
+            bool authorExists = await _context.Authors
+                .AnyAsync(a => a.AuthorId == authorId);
+
+            if (!authorExists)
             {
                 throw new Exception("Author doesn't exist!");
             }
@@ -103,17 +104,38 @@ namespace LetterEater.DataAccess.Repositories
             await _context.Authors
                 .Where(a => a.AuthorId == authorId)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(b => b.Name, b => name)
-                    .SetProperty(b => b.Surename, b => surename));
+                    .SetProperty(b => b.Name, name)
+                    .SetProperty(b => b.Surename, surename));
 
             var author = await _context.Authors
                 .Include(a => a.Books)
                 .FirstOrDefaultAsync(a => a.AuthorId == authorId);
 
+            if (author == null)
+            {
+                throw new Exception("Author not found.");
+            }
+
+            author.Books.Clear();
+
             foreach (var book in books)
             {
-                _context.Books.Attach(book);
-                author.Books.Add(book);
+                var bookEntity = new BookEntity
+                {
+                    BookId = book.BookId,
+                    Title = book.Title,
+                    Genre = book.Genre,
+                    Description = book.Description,
+                    Price = book.Price,
+                    CountPages = book.CountPages,
+                    Series = book.Series,
+                    ISBN = book.ISBN,
+                    Quantity = book.Quantity,
+                    AuthorId = authorId,
+                    PublishingHouseId = book.PublishingHouseId
+                };
+
+                author.Books.Add(bookEntity);
             }
 
             await _context.SaveChangesAsync();
