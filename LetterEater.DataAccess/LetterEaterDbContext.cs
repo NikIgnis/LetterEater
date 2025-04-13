@@ -12,9 +12,12 @@ namespace LetterEater.DataAccess
     {
         public LetterEaterDbContext(DbContextOptions<LetterEaterDbContext> options) : base(options)
         {
-
         }
 
-        DbSet<BookEntity> Books { get; set; }
+        public DbSet<BookEntity> Books { get; set; }
+        public DbSet<AuthorEntity> Authors { get; set; }
+        public DbSet<PublishingHouseEntity> PublishingHouses { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<AdminEntity> Admins { get; set; }
     }
 }

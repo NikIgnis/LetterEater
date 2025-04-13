@@ -11,11 +11,21 @@ namespace LetterEater.DataAccess.Configures
         {
             builder.HasKey(x => x.BookId);
 
-            builder.Property(x => x.Author)
-                .IsRequired();
+            builder
+                .HasOne(b => b.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId);
+
+            builder
+                .HasOne(b => b.PublishingHouse)
+                .WithMany(pbh => pbh.Books)
+                .HasForeignKey(b => b.PublishingHouseId);
 
             builder.Property(x => x.Title)
                 .HasMaxLength(Book.MAX_TITLE_LENGTH)
+                .IsRequired();
+
+            builder.Property(x => x.Author)
                 .IsRequired();
 
             builder.Property(x => x.Genre)

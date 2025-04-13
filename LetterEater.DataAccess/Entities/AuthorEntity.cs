@@ -13,12 +13,9 @@ namespace LetterEater.DataAccess.Entities
     {
         [Key]
         public Guid AuthorId { get; set; }
-
         public string Name { get; set; }
-
         public string Surename { get; set; }
-
         [ForeignKey(nameof(BookEntity))]
-        public List<Book> Books { get; set; }
+        public List<BookEntity> Books { get; set; }
     }
 }

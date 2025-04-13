@@ -13,10 +13,9 @@ namespace LetterEater.DataAccess.Entities
         [Key]
         public Guid BookId { get; set;  }
 
-        [ForeignKey(nameof(Author))]
-        public string Author { get; set; }
-
         public string Title { get; set; }
+
+        public string AuthorName => Author?.Name[0] + ". " + Author?.Surename;
 
         public string Genre { get; set; }
 
@@ -26,13 +25,20 @@ namespace LetterEater.DataAccess.Entities
 
         public int CountPages { get; set; }
 
-        [ForeignKey(nameof(PublishingHouse))]
-        public string PublishingHouse { get; set; }
+        public string PublishingHouseName => PublishingHouse?.Name;
 
-        public string Series { get; set; }
+        public string? Series { get; set; }
 
         public string ISBN { get; set; }
 
         public int Quantity { get; set; }
+
+        public Guid AuthorId { get; set; }
+
+        public Guid PublishingHouseId { get; set; }
+
+        public AuthorEntity Author { get; set; }
+
+        public PublishingHouseEntity PublishingHouse { get; set; }
     }
 }
