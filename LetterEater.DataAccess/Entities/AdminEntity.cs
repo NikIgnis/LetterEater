@@ -9,15 +9,6 @@ namespace LetterEater.DataAccess.Entities
 {
     public class AdminEntity
     {
-        public AdminEntity(Guid adminId, string name, string surename, string contactNumber, string email, string password)
-        {
-            AdminId = adminId;
-            Name = name;
-            Surename = surename;
-            ContactNumber = contactNumber;
-            Email = email;
-            Password = password;
-        }
         [Key]
         public Guid AdminId { get; set; }
 

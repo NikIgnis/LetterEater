@@ -24,6 +24,10 @@ namespace LetterEater.DataAccess.Configures
                 .HasMaxLength(User.MAX_LENGTH_NAME_SURENAME)
                 .IsRequired();
 
+            builder.Property(x => x.Login)
+                .HasMaxLength(User.MAX_LENGTH_LOGIN)
+                .IsRequired();
+
             builder.Property(x => x.ContactNumber)
                 .IsRequired();
 

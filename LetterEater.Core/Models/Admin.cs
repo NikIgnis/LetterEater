@@ -32,5 +32,10 @@ namespace BookStore.Core.Models
         public string Email { get; }
 
         public string Password { get; }
+
+        public static Admin Create(Guid adminId, string name, string surename, string contactNumber, string email, string password)
+        {
+            return new Admin(adminId, name, surename, contactNumber, email, password);
+        }
     }
 }

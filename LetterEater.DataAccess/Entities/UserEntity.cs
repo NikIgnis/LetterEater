@@ -16,6 +16,8 @@ namespace LetterEater.DataAccess.Entities
 
         public string Surename { get; set; }
 
+        public string Login { get; set; }
+
         public string ContactNumber { get; set; }
 
         public string Email { get; set; }

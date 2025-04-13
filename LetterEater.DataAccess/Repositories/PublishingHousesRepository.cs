@@ -24,12 +24,12 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouse.PublishingHouseId);
             
-            if (publishingHouseExist)
+            if (!publishingHouseExist)
             {
                 throw new Exception("Publishing house doesn't exist");
             }
 
-            var publishingHouseEntity = new PublishingHouseEntity
+            var publishingHouseEntity = new PublishingHouseEntity()
             {
                 PublishingHouseId = publishingHouse.PublishingHouseId,
                 Name = publishingHouse.Name,
@@ -59,7 +59,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync();
 
-            if (publishingHouseExist)
+            if (!publishingHouseExist)
             {
                 throw new Exception("Publishing houses don't available");
             }
@@ -95,7 +95,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouseId);
 
-            if (publishingHouseExist)
+            if (!publishingHouseExist)
             {
                 throw new Exception("Publishing house doesn't exist");
             }
@@ -103,7 +103,7 @@ namespace LetterEater.DataAccess.Repositories
             await _context.PublishingHouses
                 .Where(a => a.PublishingHouseId == publishingHouseId)
                 .ExecuteUpdateAsync(s => s
-                .SetProperty(b => b.Name, name));
+                    .SetProperty(b => b.Name, b => name));
 
             var author = await _context.PublishingHouses
                 .Include(a => a.Books)
@@ -124,7 +124,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouseId);
 
-            if (publishingHouseExist)
+            if (!publishingHouseExist)
             {
                 throw new Exception("Publishing house doesn't exist");
             }

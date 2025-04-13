@@ -9,13 +9,15 @@ namespace BookStore.Core.Models
     public class User
     {
         public const int MAX_LENGTH_NAME_SURENAME = 50;
+        public const int MAX_LENGTH_LOGIN = 50;
         public const int MAX_LENGTH_PASSWORD = 50;
 
-        public User(Guid userId, string name, string surename, string contactNumber, string email, string password)
+        public User(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
         {
             UserId = userId;
             Name = name;
             Surename = surename;
+            Login = login;
             ContactNumber = contactNumber;
             Email = email;
             Password = password;
@@ -27,10 +29,17 @@ namespace BookStore.Core.Models
 
         public string Surename { get; }
 
+        public string Login { get; }
+
         public string ContactNumber { get; }
 
         public string Email { get; }
 
         public string Password { get; }
+
+        public static User Create(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
+        {
+            return new User(userId, name, surename, login, contactNumber, email, password);
+        }
     }
 }

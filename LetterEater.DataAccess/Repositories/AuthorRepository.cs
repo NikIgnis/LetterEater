@@ -28,7 +28,7 @@ namespace LetterEater.DataAccess.Repositories
                 throw new Exception("This author is already available");
             }
 
-            var authorEntity = new AuthorEntity
+            var authorEntity = new AuthorEntity()
             {
                 AuthorId = author.AuthorId,
                 Name = author.Name,
@@ -103,8 +103,8 @@ namespace LetterEater.DataAccess.Repositories
             await _context.Authors
                 .Where(a => a.AuthorId == authorId)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(b => b.Name, name)
-                    .SetProperty(b => b.Surename, surename));
+                    .SetProperty(b => b.Name, b => name)
+                    .SetProperty(b => b.Surename, b => surename));
 
             var author = await _context.Authors
                 .Include(a => a.Books)
