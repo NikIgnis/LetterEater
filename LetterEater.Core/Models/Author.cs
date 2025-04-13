@@ -25,5 +25,10 @@ namespace BookStore.Core.Models
         public string Surename { get; }
 
         public List<Book> Books { get; }
+
+        public static Author Create(Guid authorId, string name, string surename, List<Book> books)
+        {
+            return new Author(authorId, name, surename, new List<Book>(books));
+        }
     }
 }

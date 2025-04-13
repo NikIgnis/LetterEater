@@ -18,7 +18,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool bookExist = await _context.Books.AnyAsync(b => b.BookId == book.BookId);
 
-            if (bookExist)
+            if (!bookExist)
             {
                 throw new Exception("This book is already available");
             }
@@ -39,7 +39,6 @@ namespace LetterEater.DataAccess.Repositories
             };
 
             await _context.Books.AddAsync(bookEntity);
-            await _context.SaveChangesAsync();
 
             var newAuthor = await _context.Authors
                 .Include(a => a.AuthorId)
@@ -52,11 +51,20 @@ namespace LetterEater.DataAccess.Repositories
             newAuthor.Books.Add(bookEntity);
             newPublishingHouse.Books.Add(bookEntity);
 
+            await _context.SaveChangesAsync();
+
             return bookEntity.BookId;
         }
 
         public async Task<List<Book>> Get()
         {
+            bool bookExist = await _context.Books.AnyAsync();
+
+            if (!bookExist)
+            {
+                throw new Exception("Books don't available");
+            }
+
             var bookEntities = await _context.Books
                 .AsNoTracking()
                 .ToListAsync();
@@ -70,6 +78,13 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<Guid> Update(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseID)
         {
+            bool bookExist = await _context.Books.AnyAsync(b => b.BookId == bookId);
+
+            if (!bookExist)
+            {
+                throw new Exception("This book is already available");
+            }
+
             var book = await _context.Books
                 .Include(b => b.AuthorId)
                 .Include(b => b.PublishingHouseId)
@@ -125,6 +140,13 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<Guid> Delete(Guid bookId)
         {
+            bool bookExist = await _context.Books.AnyAsync(b => b.BookId == bookId);
+
+            if (!bookExist)
+            {
+                throw new Exception("This book is already available");
+            }
+
             var author = await _context.Authors
                 .Include(a => a.AuthorId)
                 .FirstOrDefaultAsync();

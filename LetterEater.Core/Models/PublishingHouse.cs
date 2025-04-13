@@ -21,5 +21,10 @@ namespace BookStore.Core.Models
         public string Name { get; }
 
         public List<Book> Books { get; }
+
+        public static PublishingHouse Create(Guid publishingHouseId, string name, List<Book> books)
+        {
+            return new PublishingHouse(publishingHouseId, name, new List<Book>(books));
+        }
     }
 }

@@ -14,9 +14,8 @@ namespace LetterEater.DataAccess.Entities
         [Key]
         public Guid PublishingHouseId { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set;  }
 
-        [ForeignKey(nameof(BookEntity))]
-        public List<BookEntity> Books { get; }
+        public List<BookEntity> Books { get; set; }
     }
 }
