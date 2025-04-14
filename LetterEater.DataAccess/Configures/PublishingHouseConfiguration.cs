@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Configures
 {
-    public class AuthorConfigure : IEntityTypeConfiguration<Author>
+    public class PublishingHouseConfiguration : IEntityTypeConfiguration<PublishingHouse>
     {
-        public void Configure(EntityTypeBuilder<Author> builder)
+        public void Configure(EntityTypeBuilder<PublishingHouse> builder)
         {
-            builder.HasKey(x => x.AuthorId);
+            builder.HasKey(x => x.PublishingHouseId);
 
             builder
-                .HasMany(a => a.Books)
-                .WithOne(b => b.Author)
+                .HasMany(ph => ph.Books)
+                .WithOne(b => b.PublishingHouse)
                 .HasForeignKey(b => b.BookId);
 
             builder.Property(x => x.Name)

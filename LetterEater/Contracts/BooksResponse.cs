@@ -1,15 +1,15 @@
 ﻿namespace LetterEater.Contracts
 {
     public record BooksResponse (
-        Guid bookId, 
-        string title, 
-        string genre, 
-        string description, 
-        decimal price, 
-        int countPages, 
-        string series, 
-        string isbn, 
-        int quantity, 
-        Guid authorId, 
-        Guid publishingHouseId);
+        Guid BookId, 
+        string Title, 
+        string Genre, 
+        string Description, 
+        decimal Price, 
+        int CountPages, 
+        string Series, 
+        string ISBN, 
+        int Quantity, 
+        Guid AuthorId, 
+        Guid PublishingHouseId);
 }

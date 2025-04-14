@@ -10,22 +10,18 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Configures
 {
-    internal class UserConfigure : IEntityTypeConfiguration<UserEntity>
+    public class AdminConfiguration : IEntityTypeConfiguration<AdminEntity>
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
+        public void Configure(EntityTypeBuilder<AdminEntity> builder)
         {
-            builder.HasKey(x => x.UserId);
+            builder.HasKey(x => x.AdminId);
 
             builder.Property(x => x.Name)
-                .HasMaxLength(User.MAX_LENGTH_NAME_SURENAME)
+                .HasMaxLength(Admin.MAX_LENGTH_NAME_SURENAME)
                 .IsRequired();
 
             builder.Property(x => x.Surename)
-                .HasMaxLength(User.MAX_LENGTH_NAME_SURENAME)
-                .IsRequired();
-
-            builder.Property(x => x.Login)
-                .HasMaxLength(User.MAX_LENGTH_LOGIN)
+                .HasMaxLength(Admin.MAX_LENGTH_NAME_SURENAME)
                 .IsRequired();
 
             builder.Property(x => x.ContactNumber)
@@ -35,7 +31,7 @@ namespace LetterEater.DataAccess.Configures
                 .IsRequired();
 
             builder.Property(x => x.Password)
-                .HasMaxLength(User.MAX_LENGTH_PASSWORD)
+                .HasMaxLength(Admin.MAX_LENGTH_PASSWORD)
                 .IsRequired();
         }
     }
