@@ -22,7 +22,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool authorExist = await _context.Authors.AnyAsync(a => a.AuthorId == author.AuthorId);
 
-            if (!authorExist)
+            if (authorExist)
             {
                 throw new Exception("This author is already available");
             }
@@ -146,6 +146,7 @@ namespace LetterEater.DataAccess.Repositories
         public async Task<Guid> Delete(Guid authorId)
         {
             bool authorExist = await _context.Authors.AnyAsync(a => a.AuthorId == authorId);
+
             if (!authorExist)
             {
                 throw new Exception("Author doesn't exist!");

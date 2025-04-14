@@ -16,7 +16,7 @@ namespace LetterEater.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AuthorsResponse>>> GetBooks()
+        public async Task<ActionResult<List<AuthorsResponse>>> GetAuthors()
         {
             var books = await _authorsService.GetAllAuthors();
 
@@ -26,7 +26,7 @@ namespace LetterEater.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateNewBook([FromBody] AuthorsRequest authorsRequest)
+        public async Task<ActionResult<Guid>> CreateNewAuthor([FromBody] AuthorsRequest authorsRequest)
         {
             var author = Author.Create(
                 Guid.NewGuid(),

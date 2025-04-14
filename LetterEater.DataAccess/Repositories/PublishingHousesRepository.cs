@@ -23,9 +23,9 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool publishingHouseExist = await _context.PublishingHouses.AnyAsync(b => b.PublishingHouseId == publishingHouse.PublishingHouseId);
 
-            if (!publishingHouseExist)
+            if (publishingHouseExist)
             {
-                throw new Exception("Publishing house doesn't exist");
+                throw new Exception("Publishing house is available!");
             }
 
             var publishingHouseEntity = new PublishingHouseEntity()
@@ -97,7 +97,7 @@ namespace LetterEater.DataAccess.Repositories
 
             if (!publishingHouseExists)
             {
-                throw new Exception("Publishing house doesn't exist");
+                throw new Exception("Publishing house doesn't exist!");
             }
 
             await _context.PublishingHouses
@@ -147,7 +147,7 @@ namespace LetterEater.DataAccess.Repositories
 
             if (!publishingHouseExist)
             {
-                throw new Exception("Publishing house doesn't exist");
+                throw new Exception("Publishing house doesn't exist!");
             }
 
             await _context.PublishingHouses

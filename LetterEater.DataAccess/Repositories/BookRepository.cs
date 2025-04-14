@@ -16,12 +16,27 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<Guid> Create(Book book)
         {
-            //bool bookExist = await _context.Books.AnyAsync(b => b.BookId == book.BookId);
+            bool bookExist = await _context.Books.AnyAsync(b => b.BookId == book.BookId);
 
-            //if (bookExist)
-            //{
-            //    throw new Exception("This book is already available");
-            //}
+            if (bookExist)
+            {
+                throw new Exception("This book is already available!");
+            }
+
+            bool authorExists = await _context.Authors.AnyAsync(a => a.AuthorId == book.AuthorId);
+
+            if (!authorExists)
+            {
+                throw new Exception("Author doesn't exist!");
+            }
+
+            bool publishingHouseExists = await _context.PublishingHouses.AnyAsync(p => p.PublishingHouseId == book.PublishingHouseId);
+            
+            if (!publishingHouseExists)
+            {
+                throw new Exception("Publishing house doesn't exist!");
+            }
+
 
             var bookEntity = new BookEntity
             {
@@ -40,16 +55,16 @@ namespace LetterEater.DataAccess.Repositories
 
             await _context.Books.AddAsync(bookEntity);
 
-            //var newAuthor = await _context.Authors
-            //    .Include(a => a.AuthorId)
-            //    .FirstOrDefaultAsync(a => a.AuthorId == book.AuthorId);
+            var newAuthor = await _context.Authors
+                .Include(a => a.AuthorId)
+                .FirstOrDefaultAsync(a => a.AuthorId == book.AuthorId);
 
-            //var newPublishingHouse = await _context.PublishingHouses
-            //    .Include(a => a.PublishingHouseId)
-            //    .FirstOrDefaultAsync(a => a.PublishingHouseId == book.PublishingHouseId);
+            var newPublishingHouse = await _context.PublishingHouses
+                .Include(a => a.PublishingHouseId)
+                .FirstOrDefaultAsync(a => a.PublishingHouseId == book.PublishingHouseId);
 
-            //newAuthor.Books.Add(bookEntity);
-            //newPublishingHouse.Books.Add(bookEntity);
+            newAuthor.Books.Add(bookEntity);
+            newPublishingHouse.Books.Add(bookEntity);
 
             await _context.SaveChangesAsync();
 
@@ -58,13 +73,6 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<List<Book>> Get()
         {
-            //bool bookExist = await _context.Books.AnyAsync();
-
-            //if (!bookExist)
-            //{
-            //    throw new Exception("Books don't available");
-            //}
-
             var bookEntities = await _context.Books
                 .AsNoTracking()
                 .ToListAsync();
@@ -80,7 +88,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool bookExist = await _context.Books.AnyAsync(b => b.BookId == bookId);
 
-            if (bookExist)
+            if (!bookExist)
             {
                 throw new Exception("This book doesn't exist!");
             }

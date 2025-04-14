@@ -29,7 +29,7 @@ namespace LetterEater.Controllers
         public async Task<ActionResult<Guid>> CreateNewPublishingHouse([FromBody] PublishingHousesRequest publishingHousesRequest)
         {
             var publishingHouses = PublishingHouse.Create(
-                publishingHousesRequest.PublishingHouseId,
+                Guid.NewGuid(),
                 publishingHousesRequest.Name,
                 publishingHousesRequest.Books);
 
