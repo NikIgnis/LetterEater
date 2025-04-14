@@ -1,4 +1,5 @@
-﻿using LetterEater.DataAccess.Repositories;
+﻿using LetterEater.Core.Models;
+using LetterEater.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LetterEater.Application.Services
 {
-    public class BooksService
+    public class BooksService : IBooksService
     {
         private readonly IBookRepository _boolRepository;
 
@@ -16,6 +17,24 @@ namespace LetterEater.Application.Services
             _boolRepository = boolRepository;
         }
 
+        public async Task<Guid> CreateBook(Book book)
+        {
+            return await _boolRepository.Create(book);
+        }
 
+        public async Task<List<Book>> GetAllBooks()
+        {
+            return await _boolRepository.Get();
+        }
+
+        public async Task<Guid> UpdateBook(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseID)
+        {
+            return await _boolRepository.Update(bookId, title, genre, description, price, countPages, series, isbn, quantity, authorId, publishingHouseID);
+        }
+
+        public async Task<Guid> DeleteBook(Guid bookId)
+        {
+            return await _boolRepository.Delete(bookId);
+        }
     }
 }

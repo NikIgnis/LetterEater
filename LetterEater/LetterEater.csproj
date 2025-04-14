@@ -21,7 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LetterEater.Application\LetterEater.Application.csproj" />
     <ProjectReference Include="..\LetterEater.DataAccess\LetterEater.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

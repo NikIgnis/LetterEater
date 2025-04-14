@@ -17,9 +17,9 @@ namespace LetterEater.DataAccess.Repositories
         {
             _context = context;
         }
-        public async Task<Guid> Create(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
+        public async Task<Guid> Create(User user)
         {
-            bool userExist = await _context.Users.AnyAsync(u => u.UserId == userId);
+            bool userExist = await _context.Users.AnyAsync(u => u.UserId == user.UserId);
 
             if (!userExist)
             {
@@ -28,19 +28,19 @@ namespace LetterEater.DataAccess.Repositories
 
             var userEntity = new UserEntity()
             {
-                UserId = userId,
-                Name = name,
-                Surename = surename,
-                Login = login,
-                ContactNumber = contactNumber,
-                Email = email,
-                Password = password
+                UserId = user.UserId,
+                Name = user.Name,
+                Surename = user.Surename,
+                Login = user.Login,
+                ContactNumber = user.ContactNumber,
+                Email = user.Email,
+                Password = user.Password
             };
 
             await _context.Users.AddAsync(userEntity);
             await _context.SaveChangesAsync();
 
-            return userId;
+            return user.UserId;
         }
 
         public async Task<List<User>> Get()
