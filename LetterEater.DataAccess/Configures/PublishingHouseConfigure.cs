@@ -18,7 +18,7 @@ namespace LetterEater.DataAccess.Configures
             builder
                 .HasMany(ph => ph.Books)
                 .WithOne(b => b.PublishingHouse)
-                .HasForeignKey(b => b.PublishingHouseId);
+                .HasForeignKey(b => b.BookId);
 
             builder.Property(x => x.Name)
                 .IsRequired();
