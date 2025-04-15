@@ -13,10 +13,26 @@ namespace LetterEater.Core.Models
         public const int MAX_TITLE_LENGTH = 200;
         public const int MAX_DESCRIPTIONLENGTH = 500;
 
-        private Book(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseId)
+        private Book(
+            Guid bookId,
+            string title,
+            string authorName,
+            int publicationYear,
+            string genre,
+            string description,
+            decimal price,
+            int countPages,
+            string publishingHouseName,
+            string? series,
+            string isbn,
+            int quantity,
+            Guid? authorId,
+            Guid? publishingHouseId)
         {
             BookId = bookId;
             Title = title;
+            AuthorName = authorName;
+            PublicationYear = publicationYear;
             Genre = genre;
             Description = description;
             Price = price;
@@ -32,7 +48,9 @@ namespace LetterEater.Core.Models
 
         public string Title { get; }
 
-        public string AuthorName => Author?.Name[0] + ". " + Author?.Surename;
+        public string AuthorName { get; }
+
+        public int PublicationYear { get; }
 
         public string Genre { get; }
 
@@ -42,25 +60,53 @@ namespace LetterEater.Core.Models
 
         public int CountPages { get; }
 
-        public string PublishingHouseName => PublishingHouse?.Name;
+        public string PublishingHouseName { get; }
 
-        public string Series { get; }
+        public string? Series { get; }
 
         public string ISBN { get; }
 
         public int Quantity { get; }
 
-        public Guid AuthorId { get; }
+        public Guid? AuthorId { get; }
 
-        public Guid PublishingHouseId { get; }
+        public Guid? PublishingHouseId { get; }
 
-        public Author Author { get; }
+        public Author? Author { get; }
 
-        public PublishingHouse PublishingHouse { get; }
+        public PublishingHouse? PublishingHouse { get; }
 
-        public static Book Create(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseId)
+        public static Book Create(
+            Guid bookId,
+            string title,
+            string authorName,
+            int publicationYear,
+            string genre,
+            string description,
+            decimal price,
+            int countPages,
+            string publishingHouseName,
+            string? series,
+            string isbn,
+            int quantity,
+            Guid? authorId,
+            Guid? publishingHouseId)
         {
-            return new Book(bookId, title, genre, description, price, countPages, series, isbn, quantity, authorId, publishingHouseId);
+            return new Book(
+                bookId,
+                title,
+                authorName,
+                publicationYear,
+                genre,
+                description,
+                price,
+                countPages,
+                publishingHouseName,
+                series,
+                isbn,
+                quantity,
+                authorId,
+                publishingHouseId);
         }
     }
 }

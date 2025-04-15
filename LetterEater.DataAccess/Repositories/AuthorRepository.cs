@@ -75,10 +75,13 @@ namespace LetterEater.DataAccess.Repositories
                     a.Books.Select(bookEntity => Book.Create(
                         bookEntity.BookId,
                         bookEntity.Title,
+                        bookEntity.AuthorName,
+                        bookEntity.PublicationYear,
                         bookEntity.Genre,
                         bookEntity.Description,
                         bookEntity.Price,
                         bookEntity.CountPages,
+                        bookEntity.PublishingHouseName,
                         bookEntity.Series,
                         bookEntity.ISBN,
                         bookEntity.Quantity,

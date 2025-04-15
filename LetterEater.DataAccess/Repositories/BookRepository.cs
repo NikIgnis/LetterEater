@@ -42,10 +42,13 @@ namespace LetterEater.DataAccess.Repositories
             {
                 BookId = book.BookId,
                 Title = book.Title,
+                AuthorName = book.AuthorName,
+                PublicationYear = book.PublicationYear,
                 Genre = book.Genre,
                 Description = book.Description,
                 Price = book.Price,
                 CountPages = book.CountPages,
+                PublishingHouseName = book.PublishingHouseName,
                 Series = book.Series,
                 ISBN = book.ISBN,
                 Quantity = book.Quantity,
@@ -78,13 +81,41 @@ namespace LetterEater.DataAccess.Repositories
                 .ToListAsync();
 
             var books = bookEntities
-                .Select(b => Book.Create(b.BookId, b.Title, b.Genre, b.Description, b.Price, b.CountPages, b.Series, b.ISBN, b.Quantity, b.AuthorId, b.PublishingHouseId))
+                .Select(b => Book.Create(
+                    b.BookId,
+                    b.Title,
+                    b.AuthorName,
+                    b.PublicationYear,
+                    b.Genre,
+                    b.Description,
+                    b.Price,
+                    b.CountPages,
+                    b.PublishingHouseName,
+                    b.Series,
+                    b.ISBN,
+                    b.Quantity,
+                    b.AuthorId,
+                    b.PublishingHouseId))
                 .ToList();
 
             return books;
         }
 
-        public async Task<Guid> Update(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseID)
+        public async Task<Guid> Update(
+            Guid bookId,
+            string title,
+            string authorName,
+            int publicationYear,
+            string genre,
+            string description,
+            decimal price,
+            int countPages,
+            string publishingHouseName,
+            string? series,
+            string isbn,
+            int quantity,
+            Guid? authorId,
+            Guid? publishingHouseID)
         {
             bool bookExist = await _context.Books.AnyAsync(b => b.BookId == bookId);
 
@@ -105,10 +136,13 @@ namespace LetterEater.DataAccess.Repositories
                 .Where(b => b.BookId == bookId)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(b => b.Title, b => title)
+                    .SetProperty(b => b.AuthorName, b => authorName)
+                    .SetProperty(b => b.PublicationYear, b => publicationYear)
                     .SetProperty(b => b.Genre, b => genre)
                     .SetProperty(b => b.Description, b => description)
                     .SetProperty(b => b.Price, b => price)
                     .SetProperty(b => b.CountPages, b => countPages)
+                    .SetProperty(b => b.PublishingHouseName, b => publishingHouseName)
                     .SetProperty(b => b.Series, b => series)
                     .SetProperty(b => b.ISBN, b => isbn)
                     .SetProperty(b => b.Quantity, b => quantity)

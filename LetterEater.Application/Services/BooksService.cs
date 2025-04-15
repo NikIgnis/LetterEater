@@ -27,9 +27,37 @@ namespace LetterEater.Application.Services
             return await _boolRepository.Get();
         }
 
-        public async Task<Guid> UpdateBook(Guid bookId, string title, string genre, string description, decimal price, int countPages, string series, string isbn, int quantity, Guid authorId, Guid publishingHouseID)
+        public async Task<Guid> UpdateBook(
+            Guid bookId,
+            string title,
+            string authorName,
+            int publicationYear,
+            string genre,
+            string description,
+            decimal price,
+            int countPages,
+            string publishingHouseName,
+            string series,
+            string isbn,
+            int quantity,
+            Guid? authorId,
+            Guid? publishingHouseID)
         {
-            return await _boolRepository.Update(bookId, title, genre, description, price, countPages, series, isbn, quantity, authorId, publishingHouseID);
+            return await _boolRepository.Update(
+                bookId,
+                title,
+                authorName,
+                publicationYear,
+                genre,
+                description,
+                price,
+                countPages,
+                publishingHouseName,
+                series,
+                isbn,
+                quantity,
+                authorId,
+                publishingHouseID);
         }
 
         public async Task<Guid> DeleteBook(Guid bookId)

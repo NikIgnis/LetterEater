@@ -25,7 +25,10 @@ namespace LetterEater.DataAccess.Configures
                 .HasMaxLength(Book.MAX_TITLE_LENGTH)
                 .IsRequired();
 
-            builder.Property(x => x.Author)
+            builder.Property(x => x.AuthorName)
+                .IsRequired();
+
+            builder.Property(x => x.PublicationYear)
                 .IsRequired();
 
             builder.Property(x => x.Genre)
@@ -41,13 +44,13 @@ namespace LetterEater.DataAccess.Configures
             builder.Property(x => x.CountPages)
                 .IsRequired();
 
-            builder.Property(x => x.PublishingHouse)
+            builder.Property(x => x.PublishingHouseName)
                 .IsRequired();
 
             builder.Property(x => x.ISBN)
                 .IsRequired();
 
-            builder.Property(x => x.Genre)
+            builder.Property(x => x.Quantity)
                 .IsRequired();
         }
     }

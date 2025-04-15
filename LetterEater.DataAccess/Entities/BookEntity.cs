@@ -15,7 +15,9 @@ namespace LetterEater.DataAccess.Entities
 
         public string Title { get; set; }
 
-        public string AuthorName => Author?.Name[0] + ". " + Author?.Surename;
+        public string AuthorName { get; set; }
+
+        public int PublicationYear { get; set; }
 
         public string Genre { get; set; }
 
@@ -25,7 +27,7 @@ namespace LetterEater.DataAccess.Entities
 
         public int CountPages { get; set; }
 
-        public string PublishingHouseName => PublishingHouse?.Name;
+        public string PublishingHouseName { get; set; }
 
         public string? Series { get; set; }
 
@@ -33,12 +35,12 @@ namespace LetterEater.DataAccess.Entities
 
         public int Quantity { get; set; }
 
-        public Guid AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
 
-        public Guid PublishingHouseId { get; set; }
+        public Guid? PublishingHouseId { get; set; }
 
-        public AuthorEntity Author { get; set; }
+        public AuthorEntity? Author { get; set; }
 
-        public PublishingHouseEntity PublishingHouse { get; set; }
+        public PublishingHouseEntity? PublishingHouse { get; set; }
     }
 }

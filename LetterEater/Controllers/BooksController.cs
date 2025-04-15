@@ -20,7 +20,22 @@ namespace LetterEater.Controllers
         {
             var books = await _booksService.GetAllBooks();
 
-            var response = books.Select(b => new BooksResponse(b.BookId, b.Title, b.Genre, b.Description, b.Price, b.CountPages, b.Series, b.ISBN, b.Quantity, b.AuthorId, b.PublishingHouseId));
+            var response = books.Select(
+                b => new BooksResponse(
+                b.BookId,
+                b.Title,
+                b.AuthorName,
+                b.PublicationYear,
+                b.Genre,
+                b.Description,
+                b.Price,
+                b.CountPages,
+                b.PublishingHouseName,
+                b.Series,
+                b.ISBN,
+                b.Quantity,
+                b.AuthorId,
+                b.PublishingHouseId));
 
             return Ok(response);
         }
@@ -31,11 +46,14 @@ namespace LetterEater.Controllers
             var book = Book.Create(
                 Guid.NewGuid(),
                 booksRequest.Title,
+                booksRequest.AuthorName,
+                booksRequest.PublicationYear,
                 booksRequest.Genre,
                 booksRequest.Description,
                 booksRequest.Price,
                 booksRequest.CountPages,
                 booksRequest.Series,
+                booksRequest.PublishingHouseName,
                 booksRequest.ISBN,
                 booksRequest.Quantity,
                 booksRequest.AuthorId,
@@ -52,11 +70,14 @@ namespace LetterEater.Controllers
             var book = await _booksService.UpdateBook(
                 bookId,
                 booksRequest.Title,
+                booksRequest.AuthorName,
+                booksRequest.PublicationYear,
                 booksRequest.Genre,
                 booksRequest.Description,
                 booksRequest.Price,
                 booksRequest.CountPages,
                 booksRequest.Series,
+                booksRequest.PublishingHouseName,
                 booksRequest.ISBN,
                 booksRequest.Quantity,
                 booksRequest.AuthorId,
