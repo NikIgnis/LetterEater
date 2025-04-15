@@ -37,6 +37,7 @@ namespace LetterEater.Core.Models
             Description = description;
             Price = price;
             CountPages = countPages;
+            PublishingHouseName = publishingHouseName;
             Series = series;
             ISBN = isbn;
             Quantity = quantity;

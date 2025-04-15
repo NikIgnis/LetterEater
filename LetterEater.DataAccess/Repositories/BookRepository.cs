@@ -23,21 +23,6 @@ namespace LetterEater.DataAccess.Repositories
                 throw new Exception("This book is already available!");
             }
 
-            bool authorExists = await _context.Authors.AnyAsync(a => a.AuthorId == book.AuthorId);
-
-            if (!authorExists)
-            {
-                throw new Exception("Author doesn't exist!");
-            }
-
-            bool publishingHouseExists = await _context.PublishingHouses.AnyAsync(p => p.PublishingHouseId == book.PublishingHouseId);
-            
-            if (!publishingHouseExists)
-            {
-                throw new Exception("Publishing house doesn't exist!");
-            }
-
-
             var bookEntity = new BookEntity
             {
                 BookId = book.BookId,
@@ -57,17 +42,6 @@ namespace LetterEater.DataAccess.Repositories
             };
 
             await _context.Books.AddAsync(bookEntity);
-
-            var newAuthor = await _context.Authors
-                .Include(a => a.AuthorId)
-                .FirstOrDefaultAsync(a => a.AuthorId == book.AuthorId);
-
-            var newPublishingHouse = await _context.PublishingHouses
-                .Include(a => a.PublishingHouseId)
-                .FirstOrDefaultAsync(a => a.PublishingHouseId == book.PublishingHouseId);
-
-            newAuthor.Books.Add(bookEntity);
-            newPublishingHouse.Books.Add(bookEntity);
 
             await _context.SaveChangesAsync();
 
@@ -124,14 +98,6 @@ namespace LetterEater.DataAccess.Repositories
                 throw new Exception("This book doesn't exist!");
             }
 
-            var book = await _context.Books
-                .Include(b => b.AuthorId)
-                .Include(b => b.PublishingHouseId)
-                .FirstOrDefaultAsync();
-
-            var oldAuthorId = book.AuthorId;
-            var oldPublishingHouseId = book.PublishingHouseId;
-
             await _context.Books
                 .Where(b => b.BookId == bookId)
                 .ExecuteUpdateAsync(s => s
@@ -149,34 +115,6 @@ namespace LetterEater.DataAccess.Repositories
                     .SetProperty(b => b.AuthorId, authorId)
                     .SetProperty(b => b.PublishingHouseId, publishingHouseID));
 
-            if(oldAuthorId != authorId)
-            {
-                var oldAuthor = await _context.Authors
-                    .Include(a => a.Books)
-                    .FirstOrDefaultAsync(a => a.AuthorId == oldAuthorId);
-
-                var newAuthor = await _context.Authors
-                    .Include(a => a.Books)
-                    .FirstOrDefaultAsync(a => a.AuthorId == authorId);
-
-                if (oldAuthor != null && oldAuthor.Books.Contains(book)) oldAuthor.Books.Remove(book);
-                if (newAuthor != null && newAuthor.Books.Contains(book)) newAuthor.Books.Add(book);
-            }
-
-            if(oldPublishingHouseId != publishingHouseID)
-            {
-                var oldPublishingHouse = await _context.PublishingHouses
-                    .Include(a => a.Books)
-                    .FirstOrDefaultAsync(a => a.PublishingHouseId == oldPublishingHouseId);
-
-                var newPublishingHouse = await _context.PublishingHouses
-                    .Include (a => a.Books)
-                    .FirstOrDefaultAsync(a => a.PublishingHouseId == publishingHouseID);
-
-                if(oldPublishingHouse != null && oldPublishingHouse.Books.Contains(book)) oldPublishingHouse.Books.Remove(book);
-                if(newPublishingHouse != null && newPublishingHouse.Books.Contains(book)) newPublishingHouse.Books.Add(book);
-            }
-
             return bookId;
         }
 
@@ -188,19 +126,6 @@ namespace LetterEater.DataAccess.Repositories
             {
                 throw new Exception("This book doesn't exist!");
             }
-
-            var author = await _context.Authors
-                .Include(a => a.AuthorId)
-                .FirstOrDefaultAsync();
-
-            var publishingHouse = await _context.PublishingHouses
-                .Include(b => b.PublishingHouseId)
-                .FirstOrDefaultAsync();
-
-            var booksToRemove = author.Books.Where(b => b.BookId == bookId).ToList();
-
-            foreach (var book in booksToRemove) author.Books.Remove(book);
-            foreach (var book in booksToRemove) publishingHouse.Books.Remove(book);
 
             await _context.Books
                 .Where(b => b.BookId == bookId)
