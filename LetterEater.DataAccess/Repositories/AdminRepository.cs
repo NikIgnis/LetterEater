@@ -20,13 +20,6 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<Guid> Create(Admin admin)
         {
-            bool adminExist = await _context.Admins.AnyAsync(u => u.AdminId == admin.AdminId);
-
-            if (!adminExist)
-            {
-                throw new Exception("User doesn't exist");
-            }
-
             var adminEntity = new AdminEntity()
             {
                 AdminId = admin.AdminId,
@@ -45,13 +38,6 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<List<Admin>> Get()
         {
-            bool adminExist = await _context.Admins.AnyAsync();
-
-            if (!adminExist)
-            {
-                throw new Exception("Admins don't exist");
-            }
-
             var adminEntity = await _context.Admins
                 .AsNoTracking()
                 .ToListAsync();

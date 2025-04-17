@@ -1,11 +1,6 @@
 ﻿using LetterEater.Core.Models;
 using LetterEater.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Repositories
 {
@@ -19,13 +14,6 @@ namespace LetterEater.DataAccess.Repositories
         }
         public async Task<Guid> Create(User user)
         {
-            bool userExist = await _context.Users.AnyAsync(u => u.UserId == user.UserId);
-
-            if (!userExist)
-            {
-                throw new Exception("User doesn't exist");
-            }
-
             var userEntity = new UserEntity()
             {
                 UserId = user.UserId,
@@ -45,13 +33,6 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<List<User>> Get()
         {
-            bool userExist = await _context.Users.AnyAsync();
-
-            if (!userExist)
-            {
-                throw new Exception("Users doen't exist");
-            }
-
             var userEntity = await _context.Users
                 .AsNoTracking()
                 .ToListAsync();

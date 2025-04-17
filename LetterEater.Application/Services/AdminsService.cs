@@ -27,6 +27,11 @@ namespace LetterEater.Application.Services
             return await _adminRepository.Get();
         }
 
+        public async Task<Guid> UpdateAdmin(Guid adminId, string name, string surename, string contactNumber, string email, string password)
+        {
+            return await _adminRepository.Update(adminId, name, surename, contactNumber, email, password);
+        }
+
         public async Task<Guid> DeleteAdmin(Guid adminId)
         {
             return await _adminRepository.Delete(adminId);
