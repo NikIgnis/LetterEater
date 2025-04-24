@@ -42,5 +42,9 @@ namespace LetterEater.DataAccess.Entities
         public AuthorEntity? Author { get; set; }
 
         public PublishingHouseEntity? PublishingHouse { get; set; }
+
+        public List<OrderItemEntity>? OrderItems { get; set; }
+
+        public List<CartItemEntity>? CartItems { get; set; }
     }
 }

@@ -8,28 +8,24 @@ namespace LetterEater.Core.Models
 {
     public class OrderItem
     {
-        private OrderItem(Guid orderItemId, Guid orderId, Guid bookId, int quantity, int price, Order order, Book book)
+        private OrderItem(Guid orderItemId, Guid orderId, Guid bookId, int quantity, int price)
         {
             OrderItemId = orderItemId;
             OrderId = orderId;
             BookId = bookId;
-            this.quantity = quantity;
-            this.price = price;
-            Order = order;
-            Book = book;
+            Quantity = quantity;
+            Price = price;
         }
 
         public Guid OrderItemId { get; }
         public Guid OrderId { get; }
         public Guid BookId { get; }
-        public int quantity { get; }
-        public int price { get; }
-        public Order Order { get; }
-        public Book Book { get; }
+        public int Quantity { get; }
+        public int Price { get; }
 
-        public static OrderItem Create(Guid orderItemId, Guid orderId, Guid bookId, int quantity, int price, Order order, Book book)
+        public static OrderItem Create(Guid orderItemId, Guid orderId, Guid bookId, int quantity, int price)
         {
-            return new OrderItem(orderItemId, orderId, bookId, quantity, price, order, book);
+            return new OrderItem(orderItemId, orderId, bookId, quantity, price);
         }
     }
 }

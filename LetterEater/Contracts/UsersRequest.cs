@@ -1,4 +1,6 @@
-﻿namespace LetterEater.Contracts
+﻿using LetterEater.Core.Models;
+
+namespace LetterEater.Contracts
 {
     public record UsersRequest(
         string Name,
@@ -6,5 +8,6 @@
         string Login,
         string ContactNumber,
         string Email,
-        string Password);
+        string Password,
+        List<Order> Orders);
 }

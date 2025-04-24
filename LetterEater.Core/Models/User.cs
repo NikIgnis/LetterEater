@@ -12,7 +12,7 @@ namespace LetterEater.Core.Models
         public const int MAX_LENGTH_LOGIN = 50;
         public const int MAX_LENGTH_PASSWORD = 50;
 
-        public User(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
+        public User(Guid userId, string name, string surename, string login, string contactNumber, string email, string password, List<Order> orders)
         {
             UserId = userId;
             Name = name;
@@ -21,6 +21,7 @@ namespace LetterEater.Core.Models
             ContactNumber = contactNumber;
             Email = email;
             Password = password;
+            Orders = orders;
         }
 
         public Guid UserId { get; }
@@ -37,9 +38,11 @@ namespace LetterEater.Core.Models
 
         public string Password { get; }
 
-        public static User Create(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
+        public List<Order>? Orders { get; }
+
+        public static User Create(Guid userId, string name, string surename, string login, string contactNumber, string email, string password, List<Order> orders)
         {
-            return new User(userId, name, surename, login, contactNumber, email, password);
+            return new User(userId, name, surename, login, contactNumber, email, password, orders);
         }
     }
 }

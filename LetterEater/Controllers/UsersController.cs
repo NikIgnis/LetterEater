@@ -28,7 +28,8 @@ namespace LetterEater.Controllers
                 u.Login,
                 u.ContactNumber,
                 u.Email,
-                u.Password));
+                u.Password,
+                u.Orders));
 
             return Ok(response);
         }
@@ -43,7 +44,8 @@ namespace LetterEater.Controllers
                 usersRequest.Login,
                 usersRequest.ContactNumber,
                 usersRequest.Email,
-                usersRequest.Password);
+                usersRequest.Password,
+                usersRequest.Orders);
 
             var userId = await _usersService.CreateUser(user);
             
@@ -60,7 +62,8 @@ namespace LetterEater.Controllers
                 usersRequest.Login,
                 usersRequest.ContactNumber,
                 usersRequest.Email,
-                usersRequest.Password);
+                usersRequest.Password,
+                usersRequest.Orders);
 
             return Ok(user);
         }

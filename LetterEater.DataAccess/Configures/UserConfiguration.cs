@@ -10,11 +10,15 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Configures
 {
-    internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
+    public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(x => x.UserId);
+
+            builder
+                .HasMany(x => x.Orders)
+                .WithOne(x => x.User);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(User.MAX_LENGTH_NAME_SURENAME)

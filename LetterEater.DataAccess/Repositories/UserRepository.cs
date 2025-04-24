@@ -38,13 +38,35 @@ namespace LetterEater.DataAccess.Repositories
                 .ToListAsync();
 
             var users = userEntity
-                .Select(a => User.Create(a.UserId, a.Name, a.Surename, a.Login, a.ContactNumber, a.Email, a.Password))
+                .Select(a => User.Create(
+                    a.UserId,
+                    a.Name,
+                    a.Surename,
+                    a.Login,
+                    a.ContactNumber,
+                    a.Email,
+                    a.Password,
+                    a.Orders.Select(orderEntity => Order.Create(
+                        orderEntity.OrderId,
+                        orderEntity.UserId,
+                        orderEntity.OrderDate,
+                        orderEntity.OrderItems.Select(o => OrderItem.Create(
+                            o.OrderItemId,
+                            o.OrderId,
+                            o.BookId,
+                            o.Quantity,
+                            o.Price
+                            ))
+                        .ToList()
+                    ))
+                    .ToList()
+                ))
                 .ToList();
 
             return users;
         }
 
-        public async Task<Guid> Update(Guid userId, string name, string surename, string login, string contactNumber, string email, string password)
+        public async Task<Guid> Update(Guid userId, string name, string surename, string login, string contactNumber, string email, string password, List<Order> orders)
         {
             bool userExist = await _context.Users.AnyAsync(u => u.UserId == userId);
 
@@ -62,6 +84,35 @@ namespace LetterEater.DataAccess.Repositories
                     .SetProperty(b => b.ContactNumber, b => contactNumber)
                     .SetProperty(b => b.Email, b => email)
                     .SetProperty(b => b.Password, b => password));
+
+            var user = await _context.Users
+                .Include(u => u.UserId)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            user.Orders.Clear();
+
+            foreach(var order in orders)
+            {
+                var orderEntities = orders.Select(order => new OrderEntity
+                {
+                    OrderId = order.OrderId,
+                    UserId = userId,
+                    OrderDate = order.OrderDate,
+                    OrderItems = order.OrderItems.Select(item => new OrderItemEntity
+                    {
+                        OrderItemId = item.OrderItemId,
+                        OrderId = item.OrderId,
+                        BookId = item.BookId,
+                        Quantity = item.Quantity,
+                        Price = item.Price
+                    }).ToList()
+                }).ToList();
+            }
 
             return userId;
         }

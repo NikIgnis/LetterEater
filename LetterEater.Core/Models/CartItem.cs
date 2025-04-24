@@ -25,7 +25,6 @@ namespace LetterEater.Core.Models
         public int Quantity { get; }
         public decimal Price { get; }
 
-
         public static CartItem Create(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, int price)
         {
             return new CartItem(cartItemId, userId, bookId, book, quantity, price);
