@@ -56,13 +56,6 @@ namespace LetterEater.DataAccess.Repositories
 
         public async Task<List<Author>> Get()
         {
-            bool anyAuthors = await _context.Authors.AnyAsync();
-
-            if (!anyAuthors)
-            {
-                throw new Exception("Authors doen't available!");
-            }
-
             var authorEntities = await _context.Authors
                 .AsNoTracking()
                 .ToListAsync();

@@ -21,12 +21,6 @@ namespace LetterEater.DataAccess.Configures
                 .WithMany(ph => ph.Books)
                 .HasForeignKey(b => b.PublishingHouseId);
 
-            builder
-                .HasMany(b => b.OrderItems)
-                .WithOne(oi => oi.Book)
-                .HasForeignKey(oi => oi.BookId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.Property(x => x.Title)
                 .HasMaxLength(Book.MAX_TITLE_LENGTH)
                 .IsRequired();

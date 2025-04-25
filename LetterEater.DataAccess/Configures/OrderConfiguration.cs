@@ -16,12 +16,6 @@ namespace LetterEater.DataAccess.Configures
             builder.HasKey(e => e.OrderId);
 
             builder
-                .HasMany(o => o.OrderItems)
-                .WithOne(oi => oi.Order)
-                .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId);

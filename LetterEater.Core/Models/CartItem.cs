@@ -8,7 +8,7 @@ namespace LetterEater.Core.Models
 {
     public class CartItem
     {
-        private CartItem(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, int price)
+        private CartItem(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price)
         {
             CartItemId = cartItemId;
             UserId = userId;
@@ -25,7 +25,7 @@ namespace LetterEater.Core.Models
         public int Quantity { get; }
         public decimal Price { get; }
 
-        public static CartItem Create(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, int price)
+        public static CartItem Create(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price)
         {
             return new CartItem(cartItemId, userId, bookId, book, quantity, price);
         }

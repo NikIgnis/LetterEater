@@ -16,10 +16,6 @@ namespace LetterEater.DataAccess.Configures
         {
             builder.HasKey(x => x.UserId);
 
-            builder
-                .HasMany(x => x.Orders)
-                .WithOne(x => x.User);
-
             builder.Property(x => x.Name)
                 .HasMaxLength(User.MAX_LENGTH_NAME_SURENAME)
                 .IsRequired();

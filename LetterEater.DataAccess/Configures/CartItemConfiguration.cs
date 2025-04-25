@@ -20,7 +20,6 @@ namespace LetterEater.DataAccess.Configures
                 .WithMany(u => u.CartItems)
                 .HasForeignKey(u => u.UserId);
 
-
             builder
                 .HasOne(ci => ci.Book)
                 .WithMany(b => b.CartItems)
