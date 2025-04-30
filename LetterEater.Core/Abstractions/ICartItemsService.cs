@@ -7,6 +7,6 @@ namespace LetterEater.Application.Services
         Task<Guid> CreateCartItem(CartItem cartItem);
         Task<Guid> DeleteAllCartItems(Guid catItemId);
         Task<List<CartItem>> GetAllCartItems();
-        Task<Guid> UpdateCartItem(Guid cartItemId, Guid userId, Guid bookId, int quantity, decimal price);
+        Task<Guid> UpdateCartItem(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price);
     }
 }

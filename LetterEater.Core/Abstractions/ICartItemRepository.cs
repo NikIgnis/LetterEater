@@ -7,6 +7,6 @@ namespace LetterEater.DataAccess.Repositories
         Task<Guid> Create(CartItem cartItem);
         Task<Guid> Delete(Guid cartItemId);
         Task<List<CartItem>> Get();
-        Task<Guid> Update(Guid cartItemId, Guid userId, Guid bookId, int quantity, decimal price);
+        Task<Guid> Update(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price);
     }
 }

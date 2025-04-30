@@ -94,7 +94,7 @@ namespace LetterEater.DataAccess.Repositories
             return cartItems;
         }
 
-        public async Task<Guid> Update(Guid cartItemId, Guid userId, Guid bookId, int quantity, decimal price)
+        public async Task<Guid> Update(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price)
         {
             bool cartItemExist = await _context.CartItems.AnyAsync(ci => ci.CartItemId == cartItemId);
 
@@ -110,6 +110,27 @@ namespace LetterEater.DataAccess.Repositories
                     .SetProperty(ci => ci.BookId, ci => bookId)
                     .SetProperty(ci => ci.Quantity, ci => quantity)
                     .SetProperty(ci => ci.Price, ci => price));
+
+            var cartItem = await _context.CartItems
+                .Include(ci => ci.CartItemId)
+                .FirstOrDefaultAsync();
+
+            cartItem.Book = new BookEntity
+            {
+                BookId = book.BookId,
+                Title = book.Title,
+                Genre = book.Genre,
+                Description = book.Description,
+                Price = book.Price,
+                CountPages = book.CountPages,
+                Series = book.Series,
+                ISBN = book.ISBN,
+                Quantity = book.Quantity,
+                AuthorId = book.AuthorId,
+                PublishingHouseId = book.PublishingHouseId
+            };
+
+            await _context.SaveChangesAsync();
 
             return cartItemId;
         }
