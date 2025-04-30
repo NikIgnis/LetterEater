@@ -34,7 +34,6 @@ namespace LetterEater.Controllers
                 authorsRequest.Surename,
                 authorsRequest.Books);
 
-
             var authorId = await _authorsService.CreateAuthor(author);
 
             return Ok(authorId);

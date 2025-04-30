@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Repositories
 {
-    public class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly LetterEaterDbContext _context;
 
@@ -22,7 +22,7 @@ namespace LetterEater.DataAccess.Repositories
         {
             bool orderExist = await _context.Orders.AnyAsync(o => o.OrderId == order.OrderId);
 
-            if (orderExist) 
+            if (orderExist)
             {
                 throw new Exception("This order is already available!");
             }
@@ -80,7 +80,7 @@ namespace LetterEater.DataAccess.Repositories
 
             if (!orderExist)
             {
-                throw new Exception("This order is already available!");
+                throw new Exception("Order doesn't exist!");
             }
 
             await _context.Orders
@@ -88,6 +88,42 @@ namespace LetterEater.DataAccess.Repositories
                 .ExecuteUpdateAsync(oi => oi
                     .SetProperty(oi => oi.UserId, oi => userId)
                     .SetProperty(oi => oi.OrderDate, oi => orderDate));
+
+            var orderEntity = await _context.Orders
+                .Include(o => o.OrderId)
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            foreach (var orderItem in orderItems)
+            {
+                var orderItemEntity = new OrderItemEntity
+                {
+                    OrderItemId = orderItem.OrderItemId,
+                    OrderId = orderItem.OrderId,
+                    BookId = orderItem.BookId,
+                    Quantity = orderItem.Quantity,
+                    Price = orderItem.Price
+                };
+
+                orderEntity.OrderItems.Add(orderItemEntity);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return orderId;
+        }
+
+        public async Task<Guid> Delete(Guid orderId)
+        {
+            bool orderExist = await _context.Orders.AnyAsync(o => o.OrderId == orderId);
+
+            if (!orderExist)
+            {
+                throw new Exception("Order doesn't exist!");
+            }
+
+            await _context.Orders
+                .Where(o => o.OrderId == orderId)
+                .ExecuteDeleteAsync();
 
             return orderId;
         }
