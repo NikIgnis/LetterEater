@@ -18,12 +18,18 @@ builder.Services.AddDbContext<LetterEaterDbContext>(
 builder.Services.AddScoped<IAdminsService, AdminsService>();
 builder.Services.AddScoped<IAuthorsService, AuthorsService>();
 builder.Services.AddScoped<IBooksService, BooksService>();
+builder.Services.AddScoped<IOrderItemsService, OrderItemsService>();
+builder.Services.AddScoped<ICartItemsService, CartItemsService>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IPublishingHousesService, PublishingHousesService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPublishingHousesRepository, PublishingHousesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
