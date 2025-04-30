@@ -22,7 +22,7 @@ namespace LetterEater.Application.Services
             return await _repositoryOrderItem.Create(orderItem);
         }
 
-        public async Task<List<OrderItem>> Get()
+        public async Task<List<OrderItem>> GetAllOrderItems()
         {
             return await _repositoryOrderItem.Get();
         }

@@ -47,7 +47,7 @@ namespace LetterEater.Controllers
             return Ok(userId);
         }
 
-        [HttpPut("{asminId:guid}")]
+        [HttpPut("{adminId:guid}")]
         public async Task<ActionResult<Guid>> UpdateAdmin(Guid adminId, [FromBody] AdminsRequest adminsRequest)
         {
             var admin = await _adminsService.UpdateAdmin(

@@ -2,8 +2,8 @@
 namespace LetterEater.Contracts
 {
     public record AuthorsResponse(
-        Guid AuthorId,
-        string Name,
-        string Surename,
-        List<Book> Books);
+    Guid AuthorId,
+    string Name,
+    string Surename,
+    List<Book> Books);
 }

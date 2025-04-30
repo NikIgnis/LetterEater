@@ -15,7 +15,7 @@ namespace LetterEater.DataAccess.Entities
         public Guid OrderId { get; set; }
         public Guid BookId { get; set; }
         public int Quantity { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public OrderEntity? Order { get; set; }
         public BookEntity Book { get; set; }
     }
