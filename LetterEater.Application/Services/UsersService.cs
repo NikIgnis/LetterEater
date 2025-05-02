@@ -27,9 +27,9 @@ namespace LetterEater.Application.Services
             return await _userRepository.Get();
         }
 
-        public async Task<Guid> UpdateUser(Guid userId, string name, string surename, string login, string contactNumber, string email, string password, List<Order> orders)
+        public async Task<Guid> UpdateUser(Guid userId, string name, string surename, string login, string contactNumber, string email, string password, List<Guid> ordersId)
         {
-            return await _userRepository.Update(userId, name, surename, login, contactNumber, email, password, orders);
+            return await _userRepository.Update(userId, name, surename, login, contactNumber, email, password, ordersId);
         }
 
         public async Task<Guid> DeleteUser(Guid userId)

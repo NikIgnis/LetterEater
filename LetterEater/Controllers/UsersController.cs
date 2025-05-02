@@ -29,7 +29,7 @@ namespace LetterEater.Controllers
                 u.ContactNumber,
                 u.Email,
                 u.Password,
-                u.Orders));
+                new List<Guid>(u.OrdersId)));
 
             return Ok(response);
         }
@@ -45,7 +45,7 @@ namespace LetterEater.Controllers
                 usersRequest.ContactNumber,
                 usersRequest.Email,
                 usersRequest.Password,
-                usersRequest.Orders);
+                usersRequest.OrdersId);
 
             var userId = await _usersService.CreateUser(user);
             
@@ -63,7 +63,7 @@ namespace LetterEater.Controllers
                 usersRequest.ContactNumber,
                 usersRequest.Email,
                 usersRequest.Password,
-                usersRequest.Orders);
+                usersRequest.OrdersId);
 
             return Ok(user);
         }

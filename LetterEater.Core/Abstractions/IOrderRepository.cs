@@ -7,6 +7,6 @@ namespace LetterEater.DataAccess.Repositories
         Task<Guid> Create(Order order);
         Task<Guid> Delete(Guid orderId);
         Task<List<Order>> Get();
-        Task<Guid> Update(Guid orderId, Guid userId, DateTime orderDate, List<OrderItem> orderItems);
+        Task<Guid> Update(Guid orderId, Guid userId, DateTime orderDate, List<Guid> orderItemsId);
     }
 }

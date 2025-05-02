@@ -32,15 +32,7 @@ namespace LetterEater.DataAccess.Repositories
                 OrderId = order.OrderId,
                 UserId = order.UserId,
                 OrderDate = order.OrderDate,
-                OrderItems = order.OrderItems.Select(oi => new OrderItemEntity
-                {
-                    OrderItemId = oi.OrderItemId,
-                    OrderId = oi.OrderId,
-                    BookId = oi.BookId,
-                    Quantity = oi.Quantity,
-                    Price = oi.Price,
-                }).ToList(),
-
+                OrderItemsId = new List<Guid>(order.OrderItemsId)
             };
 
             await _context.Orders.AddAsync(orderEntity);
@@ -61,20 +53,14 @@ namespace LetterEater.DataAccess.Repositories
                     a.OrderId,
                     a.UserId,
                     a.OrderDate,
-                    a.OrderItems.Select(oi => OrderItem.Create(
-                        oi.OrderItemId,
-                        a.OrderId,
-                        oi.BookId,
-                        oi.Quantity,
-                        oi.Price
-                    )).ToList()
+                    a.OrderItemsId
                 ))
                 .ToList();
 
             return orders;
         }
 
-        public async Task<Guid> Update(Guid orderId, Guid userId, DateTime orderDate, List<OrderItem> orderItems)
+        public async Task<Guid> Update(Guid orderId, Guid userId, DateTime orderDate, List<Guid> orderItemsId)
         {
             bool orderExist = await _context.Orders.AnyAsync(o => o.OrderId == orderId);
 
@@ -87,27 +73,8 @@ namespace LetterEater.DataAccess.Repositories
                 .Where(oi => oi.OrderId == orderId)
                 .ExecuteUpdateAsync(oi => oi
                     .SetProperty(oi => oi.UserId, oi => userId)
-                    .SetProperty(oi => oi.OrderDate, oi => orderDate));
-
-            var orderEntity = await _context.Orders
-                .Include(o => o.OrderId)
-                .FirstOrDefaultAsync(o => o.OrderId == orderId);
-
-            foreach (var orderItem in orderItems)
-            {
-                var orderItemEntity = new OrderItemEntity
-                {
-                    OrderItemId = orderItem.OrderItemId,
-                    OrderId = orderItem.OrderId,
-                    BookId = orderItem.BookId,
-                    Quantity = orderItem.Quantity,
-                    Price = orderItem.Price
-                };
-
-                orderEntity.OrderItems.Add(orderItemEntity);
-            }
-
-            await _context.SaveChangesAsync();
+                    .SetProperty(oi => oi.OrderDate, oi => orderDate)
+                    .SetProperty(oi => oi.OrderItemsId, new List<Guid>(orderItemsId)));
 
             return orderId;
         }

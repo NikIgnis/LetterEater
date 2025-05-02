@@ -20,7 +20,7 @@ namespace LetterEater.Controllers
         {
             var publishingHouses = await _publishingHousesService.GetPublishingHouses();
 
-            var response = publishingHouses.Select(ph => new PublishingHousesResponse(ph.PublishingHouseId, ph.Name, ph.Books));
+            var response = publishingHouses.Select(ph => new PublishingHousesResponse(ph.PublishingHouseId, ph.Name,new List<Guid>(ph.BooksId)));
 
             return Ok(response);
         }
@@ -31,7 +31,7 @@ namespace LetterEater.Controllers
             var publishingHouses = PublishingHouse.Create(
                 Guid.NewGuid(),
                 publishingHousesRequest.Name,
-                publishingHousesRequest.Books);
+                new List<Guid>(publishingHousesRequest.BooksId));
 
             var publishingHouseId = await _publishingHousesService.CreatePublishingHouse(publishingHouses);
 
@@ -44,7 +44,7 @@ namespace LetterEater.Controllers
             var publishingHouse = await _publishingHousesService.UpdatePublishingHouse(
                 publishingHouseId,
                 publishingHousesRequest.Name,
-                publishingHousesRequest.Books);
+                new List<Guid>(publishingHousesRequest.BooksId));
 
             return Ok(publishingHouse);
         }

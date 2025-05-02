@@ -2,22 +2,22 @@
 {
     public class Order
     {
-        private Order(Guid orederId, Guid userId, DateTime orderDate, List<OrderItem> orderItems)
+        private Order(Guid orederId, Guid userId, DateTime orderDate, List<Guid> orderItemsId)
         {
             OrderId = orederId;
             UserId = userId;
             OrderDate = orderDate;
-            OrderItems = new List<OrderItem>(orderItems);
+            OrderItemsId = new List<Guid>(orderItemsId);
         }
 
         public Guid OrderId { get; }
         public Guid UserId { get; }
         public DateTime OrderDate { get; }
-        public List<OrderItem> OrderItems { get; }
+        public List<Guid> OrderItemsId { get; }
 
-        public static Order Create(Guid orederId, Guid userId, DateTime orderDate, List<OrderItem> orderItems)
+        public static Order Create(Guid orederId, Guid userId, DateTime orderDate, List<Guid> orderItemsId)
         {
-            return new Order(orederId, userId, orderDate, orderItems);
+            return new Order(orederId, userId, orderDate, orderItemsId);
         }
     }
 }

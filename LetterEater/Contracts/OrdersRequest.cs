@@ -4,5 +4,5 @@ namespace LetterEater.Contracts
     public record class OrdersRequest(
     Guid UserId,
     DateTime OrderDate,
-    List<OrderItem> OrderItems);
+    List<Guid> OrderItemsId);
 }

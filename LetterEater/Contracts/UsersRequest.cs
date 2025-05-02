@@ -9,5 +9,5 @@ namespace LetterEater.Contracts
         string ContactNumber,
         string Email,
         string Password,
-        List<Order> Orders);
+        List<Guid> OrdersId);
 }

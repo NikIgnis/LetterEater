@@ -5,5 +5,5 @@ namespace LetterEater.Contracts
     public record PublishingHousesResponse(
         Guid PublishingHousesId,
         string Name,
-        List<Book> Books);
+        List<Guid> BooksId);
 }

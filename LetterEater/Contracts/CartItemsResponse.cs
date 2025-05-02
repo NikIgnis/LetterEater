@@ -5,7 +5,6 @@ namespace LetterEater.Contracts
     Guid CartItemId,
     Guid UserId,
     Guid BookId,
-    Book Book,
     int Quantity,
     decimal Price);
 }

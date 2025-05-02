@@ -6,5 +6,5 @@ namespace LetterEater.Contracts
     Guid OrderId,
     Guid UserId,
     DateTime OrderDate,
-    List<OrderItem> OrderItems);
+    List<Guid> OrderItemsId);
 }

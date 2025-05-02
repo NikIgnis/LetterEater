@@ -7,6 +7,6 @@ namespace LetterEater.DataAccess.Repositories
         Task<Guid> Create(PublishingHouse publishingHouse);
         Task<Guid> Delete(Guid publishingHouseId);
         Task<List<PublishingHouse>> Get();
-        Task<Guid> Update(Guid publishingHouseId, string name, List<Book> books);
+        Task<Guid> Update(Guid publishingHouseId, string name, List<Guid> booksId);
     }
 }

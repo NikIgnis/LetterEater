@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LetterEater.DataAccess.Configures
 {
-    public class PublishingHouseConfiguration : IEntityTypeConfiguration<PublishingHouse>
+    public class PublishingHouseConfiguration : IEntityTypeConfiguration<PublishingHouseEntity>
     {
-        public void Configure(EntityTypeBuilder<PublishingHouse> builder)
+        public void Configure(EntityTypeBuilder<PublishingHouseEntity> builder)
         {
             builder.HasKey(x => x.PublishingHouseId);
 

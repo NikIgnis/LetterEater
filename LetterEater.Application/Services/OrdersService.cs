@@ -27,9 +27,9 @@ namespace LetterEater.Application.Services
             return await _orderRepository.Get();
         }
 
-        public async Task<Guid> UpdateOrder(Guid orderId, Guid userId, DateTime orderDate, List<OrderItem> orderItems)
+        public async Task<Guid> UpdateOrder(Guid orderId, Guid userId, DateTime orderDate, List<Guid> orderItemsId)
         {
-            return await _orderRepository.Update(orderId, userId, orderDate, orderItems);
+            return await _orderRepository.Update(orderId, userId, orderDate, orderItemsId);
         }
 
         public async Task<Guid> DeleteOrder(Guid orderId)

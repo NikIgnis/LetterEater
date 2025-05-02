@@ -7,6 +7,6 @@ namespace LetterEater.Application.Services
         Task<Guid> CreateOrder(Order order);
         Task<Guid> DeleteOrder(Guid orderId);
         Task<List<Order>> GetAllOrders();
-        Task<Guid> UpdateOrder(Guid orderId, Guid userId, DateTime orderDate, List<OrderItem> orderItems);
+        Task<Guid> UpdateOrder(Guid orderId, Guid userId, DateTime orderDate, List<Guid> orderItemsId);
     }
 }

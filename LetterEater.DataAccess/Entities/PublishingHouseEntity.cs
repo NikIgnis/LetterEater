@@ -8,5 +8,8 @@ public class PublishingHouseEntity
 
     public string Name { get; set; }
 
-    public List<BookEntity> Books { get; set; } = new();
+    public List<Guid>? BooksId { get; set; } = new List<Guid>();
+
+    //Dependencies
+    public List<BookEntity>? Books { get; set; }
 }

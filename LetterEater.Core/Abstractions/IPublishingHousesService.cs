@@ -7,6 +7,6 @@ namespace LetterEater.Application.Services
         Task<Guid> CreatePublishingHouse(PublishingHouse publishingHouse);
         Task<Guid> DeletePublishing(Guid publishingHouseId);
         Task<List<PublishingHouse>> GetPublishingHouses();
-        Task<Guid> UpdatePublishingHouse(Guid publishingHouseId, string name, List<Book> books);
+        Task<Guid> UpdatePublishingHouse(Guid publishingHouseId, string name, List<Guid> booksId);
     }
 }

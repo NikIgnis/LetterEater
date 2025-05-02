@@ -73,10 +73,10 @@ namespace LetterEater.DataAccess.Repositories
             await _context.OrderItems
                 .Where(oi => oi.OrderItemId == orderItemId)
                 .ExecuteUpdateAsync(oi => oi
-                    .SetProperty(oi => oi.OrderId, orderId)
-                    .SetProperty(oi => oi.BookId, bookId)
-                    .SetProperty(oi => oi.Quantity, quantity)
-                    .SetProperty(oi => oi.Price, price)
+                    .SetProperty(oi => oi.OrderId, b => orderId)
+                    .SetProperty(oi => oi.BookId, b => bookId)
+                    .SetProperty(oi => oi.Quantity, b => quantity)
+                    .SetProperty(oi => oi.Price, b => price)
                 );
 
             return orderItemId;

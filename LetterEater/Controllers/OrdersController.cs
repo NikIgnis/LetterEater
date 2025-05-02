@@ -18,11 +18,11 @@ namespace LetterEater.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<OrdersResponse>>> GetAllOrders(OrdersResponse ordersResponse)
+        public async Task<ActionResult<List<OrdersResponse>>> GetAllOrders()
         {
             var orders = await _ordersService.GetAllOrders();
 
-            var response = orders.Select(o => new OrdersResponse(o.OrderId, o.UserId, o.OrderDate, o.OrderItems));
+            var response = orders.Select(o => new OrdersResponse(o.OrderId, o.UserId, o.OrderDate, new List<Guid>(o.OrderItemsId)));
 
             return Ok(response);
         }
@@ -34,7 +34,7 @@ namespace LetterEater.Controllers
                 Guid.NewGuid(),
                 ordersRequest.UserId,
                 ordersRequest.OrderDate,
-                ordersRequest.OrderItems);
+                ordersRequest.OrderItemsId);
 
             var orderId = await _ordersService.CreateOrder(order);
 
@@ -48,7 +48,7 @@ namespace LetterEater.Controllers
                 orderId,
                 ordersRequest.UserId,
                 ordersRequest.OrderDate,
-                ordersRequest.OrderItems);
+                ordersRequest.OrderItemsId);
 
             return Ok(orderId);
         }

@@ -28,9 +28,9 @@ namespace LetterEater.Application.Services
             return await _cartItemRepository.Get();
         }
 
-        public async Task<Guid> UpdateCartItem(Guid cartItemId, Guid userId, Guid bookId, Book book, int quantity, decimal price)
+        public async Task<Guid> UpdateCartItem(Guid cartItemId, Guid userId, Guid bookId, int quantity, decimal price)
         {
-            return await _cartItemRepository.Update(cartItemId, userId, bookId, book, quantity, price);
+            return await _cartItemRepository.Update(cartItemId, userId, bookId, quantity, price);
         }
 
         public async Task<Guid> DeleteAllCartItems(Guid catItemId)

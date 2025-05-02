@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using LetterEater.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LetterEater.DataAccess.Migrations
 {
     [DbContext(typeof(LetterEaterDbContext))]
-    partial class LetterEaterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502133917_newLogicForOrders")]
+    partial class newLogicForOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +33,7 @@ namespace LetterEater.DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.PrimitiveCollection<List<Guid>>("BooksId")
+                        .IsRequired()
                         .HasColumnType("uuid[]");
 
                     b.Property<string>("Name")
@@ -173,6 +177,7 @@ namespace LetterEater.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.PrimitiveCollection<List<Guid>>("OrderItemsId")
+                        .IsRequired()
                         .HasColumnType("uuid[]");
 
                     b.Property<Guid>("UserId")
@@ -258,6 +263,7 @@ namespace LetterEater.DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.PrimitiveCollection<List<Guid>>("BooksId")
+                        .IsRequired()
                         .HasColumnType("uuid[]");
 
                     b.Property<string>("Name")

@@ -20,7 +20,7 @@ namespace LetterEater.Controllers
         {
             var books = await _authorsService.GetAllAuthors();
 
-            var response = books.Select(b => new AuthorsResponse(b.AuthorId, b.Name, b.Surename, b.Books));
+            var response = books.Select(b => new AuthorsResponse(b.AuthorId, b.Name, b.Surename, new List<Guid>(b.BooksId)));
 
             return Ok(response);
         }
@@ -32,7 +32,7 @@ namespace LetterEater.Controllers
                 Guid.NewGuid(),
                 authorsRequest.Name,
                 authorsRequest.Surename,
-                authorsRequest.Books);
+                new List<Guid>(authorsRequest.BooksId));
 
             var authorId = await _authorsService.CreateAuthor(author);
 
@@ -46,7 +46,7 @@ namespace LetterEater.Controllers
                 authorId,
                 authorsRequest.Name,
                 authorsRequest.Surename,
-                authorsRequest.Books);
+                new List<Guid>(authorsRequest.BooksId));
 
             return Ok(author);
         }

@@ -2,12 +2,12 @@
 
 public class Author
 {
-    public Author(Guid authorId, string name, string surename, List<Book> books)
+    public Author(Guid authorId, string name, string surename, List<Guid> booksId)
     {
         AuthorId = authorId;
         Name = name;
         Surename = surename;
-        Books = books != null ? new List<Book>(books) : new List<Book>();
+        BooksId = booksId != null ? new List<Guid>(booksId) : new List<Guid>();
     }
 
     public Guid AuthorId { get; }
@@ -16,9 +16,9 @@ public class Author
 
     public string Surename { get; }
 
-    public List<Book> Books { get; }
+    public List<Guid> BooksId { get; }
 
-    public static Author Create(Guid authorId, string name, string surename, List<Book> books)
+    public static Author Create(Guid authorId, string name, string surename, List<Guid> books)
     {
         return new Author(authorId, name, surename, books);
     }

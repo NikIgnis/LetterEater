@@ -14,6 +14,9 @@ namespace LetterEater.DataAccess.Entities
         public Guid OrderId { get; set; }
         public Guid UserId { get; set; }
         public DateTime OrderDate { get; set; }
+        public List<Guid>? OrderItemsId { get; set; } = new List<Guid>();
+
+        //Dependencies
         public List<OrderItemEntity> OrderItems { get; set; }
         public UserEntity User { get; set; }
     }

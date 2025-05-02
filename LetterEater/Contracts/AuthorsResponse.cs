@@ -5,5 +5,5 @@ namespace LetterEater.Contracts
     Guid AuthorId,
     string Name,
     string Surename,
-    List<Book> Books);
+    List<Guid> BooksId);
 }

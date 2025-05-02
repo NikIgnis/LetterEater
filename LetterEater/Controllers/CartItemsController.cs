@@ -17,17 +17,16 @@ namespace LetterEater.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CartItemsResponse>>> GetAllCartItems(CartItemsResponse cartItemsResponse)
+        public async Task<ActionResult<List<CartItemsResponse>>> GetAllCartItems()
         {
             var cartItems = await _cartItemsService.GetAllCartItems();
 
             var respomse = cartItems.Select(ci => new CartItemsResponse(
-                cartItemsResponse.CartItemId,
-                cartItemsResponse.UserId,
-                cartItemsResponse.BookId,
-                cartItemsResponse.Book,
-                cartItemsResponse.Quantity,
-                cartItemsResponse.Price));
+                ci.CartItemId,
+                ci.UserId,
+                ci.BookId,
+                ci.Quantity,
+                ci.Price));
 
             return Ok(respomse);
         }
@@ -39,7 +38,6 @@ namespace LetterEater.Controllers
                 Guid.NewGuid(),
                 cartItemsRequest.UserId,
                 cartItemsRequest.BookId,
-                cartItemsRequest.Book,
                 cartItemsRequest.Quantity,
                 cartItemsRequest.Price);
 
@@ -55,7 +53,6 @@ namespace LetterEater.Controllers
                 cartItemId,
                 cartItemsRequest.UserId,
                 cartItemsRequest.BookId,
-                cartItemsRequest.Book,
                 cartItemsRequest.Quantity,
                 cartItemsRequest.Price);
 

@@ -32,20 +32,7 @@ namespace LetterEater.DataAccess.Repositories
             {
                 PublishingHouseId = publishingHouse.PublishingHouseId,
                 Name = publishingHouse.Name,
-                Books = publishingHouse.Books.Select(book => new BookEntity
-                {
-                    BookId = book.BookId,
-                    Title = book.Title,
-                    Genre = book.Genre,
-                    Description = book.Description,
-                    Price = book.Price,
-                    CountPages = book.CountPages,
-                    Series = book.Series,
-                    ISBN = book.ISBN,
-                    Quantity = book.Quantity,
-                    AuthorId = book.AuthorId,
-                    PublishingHouseId = publishingHouse.PublishingHouseId
-                }).ToList()
+                BooksId = new List<Guid>(publishingHouse.BooksId)
             };
 
             await _context.PublishingHouses.AddAsync(publishingHouseEntity);
@@ -71,29 +58,14 @@ namespace LetterEater.DataAccess.Repositories
                 .Select(a => PublishingHouse.Create(
                 a.PublishingHouseId,
                 a.Name,
-                a.Books.Select(bookEntity => Book.Create(
-                    bookEntity.BookId,
-                    bookEntity.Title,
-                    bookEntity.AuthorName,
-                    bookEntity.PublicationYear,
-                    bookEntity.Genre,
-                    bookEntity.Description,
-                    bookEntity.Price,
-                    bookEntity.CountPages,
-                    bookEntity.PublishingHouseName,
-                    bookEntity.Series,
-                    bookEntity.ISBN,
-                    bookEntity.Quantity,
-                    bookEntity.AuthorId,
-                    a.PublishingHouseId
-                    )).ToList()
+                new List<Guid>(a.BooksId)
                 ))
                 .ToList();
 
             return publishingHouse;
         }
 
-        public async Task<Guid> Update(Guid publishingHouseId, string name, List<Book> books)
+        public async Task<Guid> Update(Guid publishingHouseId, string name, List<Guid> booksId)
         {
             bool publishingHouseExists = await _context.PublishingHouses
                 .AnyAsync(b => b.PublishingHouseId == publishingHouseId);
@@ -106,41 +78,9 @@ namespace LetterEater.DataAccess.Repositories
             await _context.PublishingHouses
                 .Where(a => a.PublishingHouseId == publishingHouseId)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(b => b.Name, name));
-
-            var publishingHouse = await _context.PublishingHouses
-                .Include(ph => ph.Books)
-                .FirstOrDefaultAsync(ph => ph.PublishingHouseId == publishingHouseId);
-
-            if (publishingHouse == null)
-            {
-                throw new Exception("Publishing house not found.");
-            }
-
-            publishingHouse.Books.Clear();
-
-            foreach (var book in books)
-            {
-                var bookEntity = new BookEntity
-                {
-                    BookId = book.BookId,
-                    Title = book.Title,
-                    Genre = book.Genre,
-                    Description = book.Description,
-                    Price = book.Price,
-                    CountPages = book.CountPages,
-                    Series = book.Series,
-                    ISBN = book.ISBN,
-                    Quantity = book.Quantity,
-                    AuthorId = book.AuthorId,
-                    PublishingHouseId = publishingHouseId
-                };
-
-                publishingHouse.Books.Add(bookEntity);
-            }
-
-            await _context.SaveChangesAsync();
-
+                    .SetProperty(b => b.Name, name)
+                    .SetProperty(b => b.BooksId, new List<Guid>(booksId)));
+                    
             return publishingHouseId;
         }
 
