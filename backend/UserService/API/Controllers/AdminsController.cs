@@ -6,7 +6,7 @@ using UserService.Core.Models;
 namespace UserService.API.Controllers
 {
     [ApiController]
-    [Route("api/Admins/[controller]")]
+    [Route("api/[controller]")]
     public class AdminsController : ControllerBase
     {
         private readonly IAdminsService _adminsService;

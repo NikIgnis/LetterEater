@@ -5,7 +5,7 @@ using UserService.Core.Abstractions;
 namespace UserService.API.Controllers
 {
     [ApiController]
-    [Route("api/Users/[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;

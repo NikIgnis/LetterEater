@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Catalog.API.Controllers
 {
     [ApiController]
-    [Route("api/Authors/[controller]")]
+    [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorsService _authorsService;
